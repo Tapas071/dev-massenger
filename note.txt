@@ -1,0 +1,8 @@
+Starting date - 19th Aug 23:00
+
+reference link of the youtube video is - https://youtu.be/PGPGcKBpAk8
+
+Used technogies -  next13 , tailwind css , mongodb , 
+
+## Getting Started
+
