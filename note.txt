@@ -2,7 +2,10 @@ Starting date - 19th Aug 23:00
 
 reference link of the youtube video is - https://youtu.be/PGPGcKBpAk8
 
+Here is the link of the mongodb database 0-- https://cloud.mongodb.com/v2/64e304f9e980f453297814cd#/metrics/replicaSet/64e3059a162039741ab19141/explorer/test
+
 Used technogies -  next13 , tailwind css , mongodb , 
 
 ## Getting Started
 
+// adding prisma and creatig model i

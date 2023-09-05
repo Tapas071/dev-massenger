@@ -6,6 +6,10 @@ import React from "react";
 import Button from "./Button";
 import AuthSocialButton from "./AuthSocialButton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { redirect } from "next/dist/server/api-utils";
+import { signIn } from "next-auth/react";
 
 type Variant = "Login" | "Register";
 
@@ -34,17 +38,53 @@ const AuthForm = () => {
   // const onSubmit = useCallback(async (data: FieldValues) => { });
   const onSubmit: SubmitHandler<FieldValues> = useCallback((data) => {
     setIsLoading(true);
-    if (variant === "Login") {
-      //  axios register
-    }
+
+    console.log(
+      "the submit btn has been clicked and the  variant is -->" + variant
+    );
+
     if (variant === "Register") {
-      //  axios register
+      axios
+        .post("/api/register", data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          toast.error("something went wrong");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
+    if (variant === "Login") {
+      signIn("credentials", {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error(callback.error);
+          }
+          if (callback?.ok && !callback?.error) {
+            toast.success("successfully registered");
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+    signIn(action, { redirect: false }).then((callback) => {
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+      if (callback?.ok && !callback?.error) {
+        toast.success("successfully registered");
+      }
+    });
   }, []);
   const socialAction = (action: string) => {
     setIsLoading(true);
   };
-
   return (
     <>
       <div className=" mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -108,7 +148,6 @@ const AuthForm = () => {
             mt-6 px-2 text-gray-500"
           >
             <div>
-              {" "}
               {variant === "Login"
                 ? "New to Messenger ?"
                 : "Already have a account "}
